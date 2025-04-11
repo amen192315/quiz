@@ -11,10 +11,17 @@ body {
 	font-family: "Noto Sans", sans-serif;
 	font-size: 16px;
 	display: flex;
-	background: linear-gradient(60deg, rgba(126, 235, 237, 1) 0%, rgba(176, 255, 176, 1) 100%);
 	justify-content: center;
+	background: linear-gradient(60deg, rgba(126, 235, 237, 1) 0%, rgba(176, 255, 176, 1) 100%);
 	align-items: center;
 	height: 100vh;
+}
+@media (max-width:767px) {
+	body{
+		
+		background-repeat: no-repeat;
+		background-size: cover;
+	}
 }
 .quiz {
 	position: relative;
@@ -26,10 +33,11 @@ body {
 	width: 600px;
 	max-width: 95vw;
 	overflow: hidden;
+	margin: 0px 15px;
 }
 
 .title{
-	font-size: 1.5rem;
+	font-size: 1.3rem;
 	padding: 1rem 0;
 	text-align: center;
 	margin: 0;
