@@ -109,7 +109,7 @@ body {
 }
 
 .submit {
-	background-color: #018737;
+	background-color: #5bcf89;
 	color: #fff;
 	border: none;
 	display: block;
@@ -121,7 +121,7 @@ body {
 }
 
 .submit:hover {
-	background-color: #5bcf89;
+	background-color: #018737;
 }
 
 .submit:focus {
