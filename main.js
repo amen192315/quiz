@@ -5,6 +5,7 @@ const submitButton = document.querySelector('#submit');
 let score = 0;
 let questionIndex = 0;
 
+
 clearPage();
 showQuestion();
 submitButton.onclick = checkAnswer;
@@ -15,49 +16,56 @@ function clearPage() {
 }
 
 function showQuestion() {
-  // Вопрос
   headerContainer.innerHTML = `<h2 class="title">${questions[questionIndex].question}</h2>`;
 
-  // Варианты ответов
-  let answerNumber = 1; // Нумеруем с 1
-  for (const answerText of questions[questionIndex].answers) {
+  let answerNumber = 1;
+  questions[questionIndex].answers.forEach(answerText => {
     const answerHTML = `
-        <li>
-          <label>
-            <input value="${answerNumber}" type="radio" name="answer" class="answer" />
-            <span>${answerText}</span>
-          </label>
-        </li>
-      `;
+      <li>
+        <label>
+          <input value="${answerNumber}" type="radio" name="answer" class="answer" />
+          <span>${answerText}</span>
+        </label>
+      </li>
+    `;
     listContainer.innerHTML += answerHTML;
     answerNumber++;
-  }
+  });
 }
 
 function checkAnswer() {
-  const checkedRadio = listContainer.querySelector(
-    'input[type="radio"]:checked'
-  );
+  const checkedRadio = listContainer.querySelector('input[type="radio"]:checked');
+  
   if (!checkedRadio) {
     alert('Выберите ответ!');
     return;
   }
 
-  const userAnswer = parseInt(checkedRadio.value); // Получаем номер ответа (1, 2, 3...)
+  const userAnswer = parseInt(checkedRadio.value);
   const isCorrect = userAnswer === questions[questionIndex].correct;
 
   if (isCorrect) {
-    score += 0.2; // Теперь score увеличивается правильно
+    score = Number((score + 0.2).toFixed(1)); 
   }
 
-  // Переход к следующему вопросу или завершение теста
   if (questionIndex < questions.length - 1) {
     questionIndex++;
     clearPage();
     showQuestion();
   } else {
-    clearPage();
-    headerContainer.innerHTML = `<h2 class="title">Тест завершён! Ваш результат: ${score} из ${questions.length}</h2>`;
-    submitButton.style.display = 'none';
+    showResults();
   }
 }
+
+function showResults() {
+  clearPage();
+  const maxScore = (questions.length * 0.2).toFixed(1);
+  headerContainer.innerHTML = `
+    <h2 class="title">Тест завершён!</h2>
+    <h3 class="score">Ваш результат: ${score.toFixed(1)} из ${maxScore}</h3>
+  `;
+  submitButton.style.display = 'none';
+  
+  showCorrectAnswers();
+}
+
