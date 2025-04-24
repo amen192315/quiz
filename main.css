@@ -120,14 +120,7 @@ body {
 
 }
 
-.submit:hover {
-	background-color: #732d91;
-}
 
-.submit:focus {
-	outline: none;
-	background-color: #5e3370;
-}
 
 .submit.next {
 	background-color: #000000;
@@ -173,4 +166,14 @@ body {
 	display: flex;
 	justify-content: center;
 	align-items: center;
+}
+.image{
+	width: 298px;
+	max-height: 206px;
+}
+.quiz-header{
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	
 }
