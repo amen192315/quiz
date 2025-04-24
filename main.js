@@ -5,7 +5,7 @@ const submitButton = document.querySelector('#submit');
 let score = 0;
 let questionIndex = 0;
 
-
+// Инициализация теста
 clearPage();
 showQuestion();
 submitButton.onclick = checkAnswer;
@@ -16,20 +16,29 @@ function clearPage() {
 }
 
 function showQuestion() {
-  headerContainer.innerHTML = `<h2 class="title">${questions[questionIndex].question}</h2>`;
+  const currentQuestion = questions[questionIndex];
+  
+  // Создаем HTML для вопроса
+  let questionHTML = `<h2 class="title">${currentQuestion.question}</h2>`;
+  
+  // Добавляем изображение, если оно есть
+  if (currentQuestion.img) {
+    questionHTML += `<img class = "image" src="${currentQuestion.img}" alt="Иллюстрация к вопросу" class="question-image">`;
+  }
+  
+  headerContainer.innerHTML = questionHTML;
 
-  let answerNumber = 1;
-  questions[questionIndex].answers.forEach(answerText => {
+  // Варианты ответов
+  currentQuestion.answers.forEach((answerText, index) => {
     const answerHTML = `
       <li>
         <label>
-          <input value="${answerNumber}" type="radio" name="answer" class="answer" />
+          <input value="${index + 1}" type="radio" name="answer" class="answer" />
           <span>${answerText}</span>
         </label>
       </li>
     `;
     listContainer.innerHTML += answerHTML;
-    answerNumber++;
   });
 }
 
@@ -45,7 +54,7 @@ function checkAnswer() {
   const isCorrect = userAnswer === questions[questionIndex].correct;
 
   if (isCorrect) {
-    score = Number((score + 0.2).toFixed(1)); 
+    score = Number((score + 0.2).toFixed(1));
   }
 
   if (questionIndex < questions.length - 1) {
@@ -62,10 +71,8 @@ function showResults() {
   const maxScore = (questions.length * 0.2).toFixed(1);
   headerContainer.innerHTML = `
     <h2 class="title">Тест завершён!</h2>
-    <h3 class="score">Ваш результат: ${score.toFixed(1)} из ${maxScore}</h3>
+    <h3 class="score">Ваш результат: ${score.toFixed(1)} из ${maxScore} баллов</h3>
   `;
   submitButton.style.display = 'none';
-  
   showCorrectAnswers();
 }
-
